@@ -20,9 +20,12 @@ import androidx.compose.ui.unit.dp
 import com.example.myestate.R
 import com.example.myestate.ui.components.ButtonComponents
 import com.example.myestate.ui.components.TextComponents
+import com.example.myestate.utils.getStringRes
 
 @Composable
 fun SplashScreen() {
+    val viewModel = SplashViewModel()
+    val state = viewModel.state.value
     Box {
 
         Image(
@@ -40,8 +43,8 @@ fun SplashScreen() {
             Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                TextComponents.HeadlineTitle("My Estate")
-                TextComponents.SubTitle("Reach The Life of Your Dreams")
+                TextComponents.HeadlineTitle(getStringRes(state.appTitle))
+                TextComponents.SubTitle(getStringRes(state.subTitle))
             }
 
             Column(modifier = Modifier.padding(bottom = 40.dp),
@@ -49,17 +52,17 @@ fun SplashScreen() {
             ) {
                 // Email Button
                 ButtonComponents.AccountButton(
-                    "Email",
-                    backColor = Color.Black,
-                    textColor = Color.White
+                    getStringRes(state.emailButtonType.text),
+                    backColor = Color(state.emailButtonType.backColor),
+                    textColor = Color(state.emailButtonType.textColor)
                     )
                 // Google Button
                 ButtonComponents.AccountButton(
-                    "Google",
-                    backColor = Color.Red,
-                    textColor = Color.White)
+                    getStringRes(state.googleButtonType.text),
+                    backColor = Color(state.googleButtonType.backColor),
+                    textColor = Color(state.googleButtonType.textColor))
 
-                TextComponents.NormalText("continue without membership")
+                TextComponents.NormalText(getStringRes(state.clickableTextTitle))
 
             }
         }

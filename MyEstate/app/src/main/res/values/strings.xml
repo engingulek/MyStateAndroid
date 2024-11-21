@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MyEstate</string>
+    <string name="empty">"</string>
+    <string name="appName">My Estate</string>
+    <string name="defaultSlogan">Reach The Life of Your Dreams</string>
+    <string name="clickableTextMember">continue without membership</string>
+    <string name="email">Email</string>
+    <string name="google">Google</string>
 </resources>
