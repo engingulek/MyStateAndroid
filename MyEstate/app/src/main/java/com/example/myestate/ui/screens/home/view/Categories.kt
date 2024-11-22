@@ -17,13 +17,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myestate.ui.components.TextComponents
-import com.example.myestate.ui.screens.home.HomeScreen
+import com.example.myestate.ui.screens.home.HomeContract
+import com.example.myestate.utils.getStringRes
 
 @Composable
-fun Categories(){
+fun Categories(state:HomeContract.UiState){
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         //Categories
-        TextComponents.SubTitle("Categories",
+        TextComponents.SubTitle(
+            getStringRes(state.categoryTitle),
             color = Color.Black,
             modifier = Modifier.padding(horizontal = 10.dp))
         LazyRow   {
@@ -58,5 +60,5 @@ fun Categories(){
 @Preview(showBackground = true)
 @Composable
 fun CategoriesPreview() {
-    Categories()
+    Categories(state = HomeContract.UiState())
 }

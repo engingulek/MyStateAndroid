@@ -4,15 +4,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.myestate.R
 import androidx.compose.runtime.State
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 interface SplashViewModelInterface {
-
+    val state :State<SplashContract.UiState>
 }
 
 class SplashViewModel : ViewModel(), SplashViewModelInterface {
     private val _uiState = mutableStateOf(SplashContract.UiState())
-    val state :State<SplashContract.UiState>  = _uiState
+   override val state :State<SplashContract.UiState>  = _uiState
 
     init {
         writeUIState()

@@ -25,7 +25,7 @@ import com.example.myestate.utils.getStringRes
 fun SplashScreen(
     navigateToHome: () -> Unit
 ) {
-    val viewModel = SplashViewModel()
+    val viewModel:SplashViewModelInterface = SplashViewModel()
     val state = viewModel.state.value
     Box {
 
