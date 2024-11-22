@@ -18,7 +18,9 @@ class HomeViewModel : ViewModel(),HomeViewModelInterface {
     }
 
     private fun writeUiState(){
-        _uiState.value.categoryTitle = R.string.categories
-        _uiState.value.estateType = R.string.estateType
+        _uiState.value = HomeContract.UiState(
+            R.string.categories,
+            R.string.estateType,
+            R.string.adverts)
     }
 }

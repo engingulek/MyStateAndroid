@@ -46,12 +46,28 @@ object TextComponents {
     fun NormalText(
         title:String,
         color:Color = Color.White,
+        fontWeight: FontWeight = FontWeight.Normal
 
     ) {
         Text(
             title,
             color = color,
             style = MaterialTheme.typography.bodyLarge,
+            fontWeight = fontWeight
+        )
+    }
+
+    //LightSubText
+    @Composable
+    fun LightSubText(
+        title:String,
+        color:Color = Color.LightGray,
+
+        ) {
+        Text(
+            title,
+            color = color,
+            style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.SemiBold
         )
     }
