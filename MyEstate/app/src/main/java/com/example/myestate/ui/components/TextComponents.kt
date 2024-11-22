@@ -29,12 +29,14 @@ object TextComponents {
     fun SubTitle(
         title:String,
         color:Color = Color.White,
+        modifier: Modifier = Modifier
         ) {
         Text(
             title,
             color = color,
             style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
+            modifier = modifier
         )
     }
 
@@ -44,6 +46,7 @@ object TextComponents {
     fun NormalText(
         title:String,
         color:Color = Color.White,
+
     ) {
         Text(
             title,
@@ -54,23 +57,18 @@ object TextComponents {
     }
 
     // NormalText Clickable
-
     @Composable
     fun NormalClickableText(
         title:String,
-        clickableAction: () -> Unit,
-        color:Color = Color.White
-
-
+        color:Color = Color.White,
+        modifier: Modifier
     ) {
         Text(
             title,
             color = color,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.clickable {
-                clickableAction()
-            }
+            modifier = modifier
         )
     }
 
