@@ -12,7 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.myestate.ui.screens.SplashScreen
+import androidx.navigation.compose.rememberNavController
+import com.example.myestate.ui.navigation.AppNavigation
+import com.example.myestate.ui.screens.splash.SplashScreen
 import com.example.myestate.ui.theme.MyEstateTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,9 +24,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyEstateTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Box(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
-                        SplashScreen()
-                    }
+                    val navController = rememberNavController()
+                    AppNavigation(
+                        modifier = Modifier.fillMaxSize()
+                            .padding(innerPadding),
+                        navHostController = navController
+                    )
                 }
             }
         }

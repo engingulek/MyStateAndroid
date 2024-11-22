@@ -1,20 +1,16 @@
-package com.example.myestate.ui.screens
+package com.example.myestate.ui.screens.splash
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import com.example.myestate.R
 import androidx.compose.runtime.State
-import androidx.compose.ui.graphics.Color
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 
 interface SplashViewModelInterface {
 
 }
 
-class SplashViewModel : ViewModel(),SplashViewModelInterface {
+class SplashViewModel : ViewModel(), SplashViewModelInterface {
     private val _uiState = mutableStateOf(SplashContract.UiState())
     val state :State<SplashContract.UiState>  = _uiState
 

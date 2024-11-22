@@ -1,14 +1,14 @@
 package com.example.myestate.splashScreen
 
 import com.example.myestate.R
-import com.example.myestate.ui.screens.SplashViewModel
+import com.example.myestate.ui.screens.splash.SplashViewModel
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 class SplashViewModelTest {
 
-    private lateinit var viewModel:SplashViewModel
+    private lateinit var viewModel: SplashViewModel
 
     @Before
     fun setup(){

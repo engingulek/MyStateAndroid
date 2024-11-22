@@ -1,6 +1,5 @@
-package com.example.myestate.ui.screens
+package com.example.myestate.ui.screens.splash
 
-import androidx.compose.ui.graphics.Color
 import com.example.myestate.R
 
 object SplashContract {
@@ -8,7 +7,7 @@ object SplashContract {
         var appTitle:Int = R.string.empty,
         var subTitle:Int  = R.string.empty,
         var clickableTextTitle:Int  = R.string.empty,
-        var emailButtonType:ButtonType = ButtonType(
+        var emailButtonType: ButtonType = ButtonType(
             R.string.email,
             0xFF000000,
             0xFFFFFFFF ),
