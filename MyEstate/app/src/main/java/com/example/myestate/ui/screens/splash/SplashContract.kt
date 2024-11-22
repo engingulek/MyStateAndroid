@@ -3,6 +3,7 @@ package com.example.myestate.ui.screens.splash
 import com.example.myestate.R
 
 object SplashContract {
+    //UiState
     data class UiState(
         var appTitle:Int = R.string.empty,
         var subTitle:Int  = R.string.empty,
@@ -16,8 +17,9 @@ object SplashContract {
             0xFF000000,
             0xFFFFFFFF )
     )
-}
 
+
+}
 
 
 data class ButtonType(val text:Int,

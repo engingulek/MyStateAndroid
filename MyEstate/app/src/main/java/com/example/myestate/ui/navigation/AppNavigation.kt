@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
+import com.example.myestate.ui.screens.home.HomeScreen
 import com.example.myestate.ui.screens.splash.SplashScreen
 import com.example.myestate.ui.screens.splash.SplashScreenPreview
 
@@ -19,7 +21,13 @@ fun AppNavigation(
         startDestination = "splashScreen"
     ){
         composable("splashScreen"){
-            SplashScreen()
+            SplashScreen(
+                navigateToHome = {navHostController.navigate("homeScreen")}
+            )
+        }
+
+        composable("homeScreen"){
+            HomeScreen()
         }
     }
 }

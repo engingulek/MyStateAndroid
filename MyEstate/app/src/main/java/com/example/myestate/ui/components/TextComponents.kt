@@ -1,8 +1,10 @@
 package com.example.myestate.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 
@@ -37,7 +39,7 @@ object TextComponents {
     }
 
 
-    // SubTitle
+    // NormalText
     @Composable
     fun NormalText(
         title:String,
@@ -48,6 +50,27 @@ object TextComponents {
             color = color,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.SemiBold
+        )
+    }
+
+    // NormalText Clickable
+
+    @Composable
+    fun NormalClickableText(
+        title:String,
+        clickableAction: () -> Unit,
+        color:Color = Color.White
+
+
+    ) {
+        Text(
+            title,
+            color = color,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.clickable {
+                clickableAction()
+            }
         )
     }
 
