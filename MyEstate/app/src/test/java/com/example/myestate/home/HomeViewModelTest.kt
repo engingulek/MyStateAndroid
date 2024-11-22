@@ -21,5 +21,6 @@ class HomeViewModelTest {
 
         //Titles
         assertEquals(R.string.categories,state.categoryTitle)
+        assertEquals(R.string.estateType,state.estateType)
     }
 }
