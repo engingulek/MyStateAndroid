@@ -1,8 +1,7 @@
-package com.example.myestate.ui.screens
+package com.example.myestate.ui.screens.splash
 
-import android.widget.Button
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,8 +22,10 @@ import com.example.myestate.ui.components.TextComponents
 import com.example.myestate.utils.getStringRes
 
 @Composable
-fun SplashScreen() {
-    val viewModel = SplashViewModel()
+fun SplashScreen(
+    navigateToHome: () -> Unit
+) {
+    val viewModel:SplashViewModelInterface = SplashViewModel()
     val state = viewModel.state.value
     Box {
 
@@ -62,8 +63,14 @@ fun SplashScreen() {
                     backColor = Color(state.googleButtonType.backColor),
                     textColor = Color(state.googleButtonType.textColor))
 
-                TextComponents.NormalText(getStringRes(state.clickableTextTitle))
-
+                //NormalClickableText
+                TextComponents.NormalClickableText(
+                    getStringRes(state.clickableTextTitle),
+                    Color.White,
+                    Modifier.clickable {
+                        navigateToHome()
+                    }
+                )
             }
         }
     }
@@ -74,5 +81,5 @@ fun SplashScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SplashScreenPreview() {
-    SplashScreen()
+    SplashScreen(navigateToHome = {})
 }

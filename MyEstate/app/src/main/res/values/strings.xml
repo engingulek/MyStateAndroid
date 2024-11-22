@@ -6,4 +6,7 @@
     <string name="clickableTextMember">continue without membership</string>
     <string name="email">Email</string>
     <string name="google">Google</string>
+    <string name="categories">Categories</string>
+    <string name="estateType">Estate Type</string>
+    <string name="adverts">Adverts</string>
 </resources>
