@@ -20,7 +20,13 @@ class AdvertDetailViewModel() : ViewModel(),AdvertDetailViewModelInterface {
     private  fun writeUiState(){
         _uiState.value = AdvertDetailContract.UiState(
             R.string.advertInfo,
-            R.string.description
+            R.string.description,
+            R.string.price,
+            R.string.advertId,
+            R.string.estateType,
+            R.string.advertDate,
+            R.string.age,
+            R.string.Floors
         )
     }
 }

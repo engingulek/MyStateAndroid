@@ -24,6 +24,7 @@ import com.example.myestate.utils.getStringRes
 @Composable
 fun AdvertDetailScreen() {
     val viewModel : AdvertDetailViewModelInterface = AdvertDetailViewModel()
+    val state = viewModel.state.value
     LazyColumn {
         item {
             AdvertDetailImage()
@@ -34,14 +35,14 @@ fun AdvertDetailScreen() {
 
             ) {
                 TextComponents.SubTitle(
-                    getStringRes(viewModel.state.value.advertInfoTitle),
+                    getStringRes(state.advertInfoTitle),
                     color = Color.Black)
-                SubBaseInfoText(title = "Price", value = "20.000Tl", type = "price")
-                SubBaseInfoText(title = "Advert Id", value = "#13231321")
-                SubBaseInfoText(title = "Estate Type", value = "Rent")
-                SubBaseInfoText(title = "Advert Date", value = "23.11.2024")
-                SubBaseInfoText(title = "Age", value = "10")
-                SubBaseInfoText(title = "Floors", value = "3")
+                SubBaseInfoText(title = getStringRes( state.price), value = "20.000Tl", type = "price")
+                SubBaseInfoText(title = getStringRes(state.advertId), value = "#13231321")
+                SubBaseInfoText(title = getStringRes(state.estateType), value = "Rent")
+                SubBaseInfoText(title = getStringRes(state.advertDate), value = "23.11.2024")
+                SubBaseInfoText(title = getStringRes(state.age), value = "10")
+                SubBaseInfoText(title = getStringRes(state.floors), value = "3")
                 TextComponents.SubTitle(getStringRes(viewModel.state.value.descriptionTitle), Color.Black)
                 TextComponents.NormalText("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",Color.Black)
             }
