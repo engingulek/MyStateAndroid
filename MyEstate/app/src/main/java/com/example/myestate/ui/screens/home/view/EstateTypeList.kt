@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,18 +28,18 @@ fun EstateTypeList(state: HomeContract.UiState) {
         ,
         horizontalAlignment = Alignment.CenterHorizontally) {
         TextComponents.SubTitle(
-            getStringRes(state.estateType),
+            getStringRes(state.estateType.title),
             color = Color.Black)
         LazyRow {
-            items(3) { index ->
+            items(state.estateType.list){ estateType ->
+
                 BoxClickable(
-                    "Estate Type",
-                    if(index == 0) Color.White else
+                    estateType.type,
+                    if(estateType.id == 1) Color.White else
                         Color.Blue,
-                    if(index == 0) Color.Blue else
+                    if(estateType.id == 1) Color.Blue else
                         Color.White,
                     Modifier.padding(10.dp))
-
             }
         }
     }
