@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.example.myestate.ui.screens.detail.AdvertDetailScreen
 import com.example.myestate.ui.screens.home.HomeScreen
 import com.example.myestate.ui.screens.splash.SplashScreen
 import com.example.myestate.ui.screens.splash.SplashScreenPreview
@@ -27,7 +28,13 @@ fun AppNavigation(
         }
 
         composable("homeScreen"){
-            HomeScreen()
+            HomeScreen(
+                navigateToDetail = {navHostController.navigate("advertDetailScreen")}
+            )
+        }
+
+        composable("advertDetailScreen"){
+            AdvertDetailScreen()
         }
     }
 }

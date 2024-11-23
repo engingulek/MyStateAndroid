@@ -3,6 +3,7 @@ package com.example.myestate.ui.screens.home.view
 import android.graphics.ImageDecoder.ImageInfo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,7 +36,9 @@ import com.example.myestate.ui.screens.home.HomeContract
 import com.example.myestate.utils.getStringRes
 
 @Composable
-fun AdvertList(state: HomeContract.UiState) {
+fun AdvertList(
+    navigateToDetail: () -> Unit,
+    state: HomeContract.UiState) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -53,6 +56,9 @@ fun AdvertList(state: HomeContract.UiState) {
                    .clip(RoundedCornerShape(10.dp))
                    .background(Color.White)
                    .padding(5.dp)
+                   .clickable {
+                       navigateToDetail()
+                   }
 
                ){
                    ImageInfo()
@@ -122,5 +128,6 @@ private fun AdvertInfo() {
 @Preview(showBackground = true)
 @Composable
 fun AdvertListPreview() {
-    AdvertList(HomeContract.UiState())
+    AdvertList({},
+        HomeContract.UiState())
 }
