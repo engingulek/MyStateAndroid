@@ -1,4 +1,4 @@
-package com.example.myestate.ui.screens.detail
+package com.example.myestate.ui.screens.detail.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

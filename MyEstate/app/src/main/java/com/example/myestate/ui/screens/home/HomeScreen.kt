@@ -15,7 +15,6 @@ import com.example.myestate.utils.getStringRes
 @Composable
 fun HomeScreen(navigateToDetail: () -> Unit) {
     val viewModel:HomeViewModelInterface = HomeViewModel()
-    val viewList =
    Column {
        EstateTypeList(state = viewModel.state.value)
        CategoriesList(state = viewModel.state.value)
