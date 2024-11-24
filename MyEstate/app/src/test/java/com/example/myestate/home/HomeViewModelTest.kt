@@ -62,8 +62,24 @@ class HomeViewModelTest {
                 assertEquals(estateType.textColor,0xFF52607D)
             }
         }
+    }
 
 
+    @Test
+    fun `when open home screen ,return categoryUi `() = runTest{
+        val state = viewModel.categoryUi.value
+
+        assertEquals(state.title,R.string.categories)
+
+        state.list.forEach { category ->
+            if (category.id == 1){
+                assertEquals(category.backColor,0xFF0000FF)
+                assertEquals(category.textColor,0xFFFFFFFF)
+            }else{
+                assertEquals(category.backColor,0xFFFFFFFF)
+                assertEquals(category.textColor,0xFF52607D)
+            }
+        }
     }
 
 
@@ -83,6 +99,22 @@ class HomeViewModelTest {
                 assertEquals(estateType.textColor,0xFF52607D)
             }
         }
+    }
 
+    @Test
+    fun `when click category ,return estaTypeUi `() = runTest{
+
+        viewModel.onAction(HomeContract.UiAction.clickedCategory(3))
+        val state = viewModel.categoryUi.value
+        
+        state.list.forEach { category ->
+            if (category.id == 3){
+                assertEquals(category.backColor,0xFF0000FF)
+                assertEquals(category.textColor,0xFFFFFFFF)
+            }else{
+                assertEquals(category.backColor,0xFFFFFFFF)
+                assertEquals(category.textColor,0xFF52607D)
+            }
+        }
     }
 }
