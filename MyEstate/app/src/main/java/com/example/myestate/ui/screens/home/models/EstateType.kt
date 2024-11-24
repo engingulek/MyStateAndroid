@@ -1,4 +1,4 @@
-package com.example.myestate.ui.screens.home
+package com.example.myestate.ui.screens.home.models
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
