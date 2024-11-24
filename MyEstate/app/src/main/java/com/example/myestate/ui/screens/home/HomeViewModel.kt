@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 interface HomeViewModelInterface {
     var state : StateFlow<HomeContract.UiState>
+    val estateTypeUi: StateFlow<HomeContract.EstateTypeUiState>
     fun onAction(action:HomeContract.UiAction)
 }
 
@@ -19,7 +20,7 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
     override var state : StateFlow<HomeContract.UiState> = _uiState
 
     private val _estateTypeUi = MutableStateFlow(HomeContract.EstateTypeUiState())
-    val estateTypeUi: StateFlow<HomeContract.EstateTypeUiState> = _estateTypeUi
+   override val estateTypeUi: StateFlow<HomeContract.EstateTypeUiState> = _estateTypeUi
 
     init {
         writeUiState()
@@ -40,7 +41,6 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
 
             _estateTypeUi.value.list = list.map { estateType ->
                 estateType.copy(
-                    isSelected = estateType.id == 1,
                     textColor = if(estateType.id == 1) 0xFFFFFFFF else 0xFF52607D,
                     backColor = if (estateType.id == 1) 0xFF0000FF else 0xFFFFFFFF
                 )
@@ -57,7 +57,6 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
     private fun onClickEstateType(id: Int){
         val updateList = _estateTypeUi.value.list.map { estateType ->
             estateType.copy(
-                isSelected = estateType.id == id,
                 textColor = if(estateType.id == id) 0xFFFFFFFF else 0xFF52607D,
                 backColor = if (estateType.id == id) 0xFF0000FF else 0xFFFFFFFF
             )
