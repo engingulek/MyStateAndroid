@@ -8,8 +8,6 @@ import com.example.myestate.ui.screens.home.models.EstateType
 object HomeContract {
 
     data class UiState(
-       // var categoryTitle: Int = R.string.empty,
-       // var advertTitle: Int = R.string.empty,
         var error:Pair<Int,Boolean> = Pair(R.string.empty, false)
     )
 
@@ -25,10 +23,6 @@ object HomeContract {
         var list : List<Category> = emptyList(),
         var error:Pair<Int,Boolean> = Pair(R.string.empty, false)
     )
-
-
-
-
 
     sealed interface UiAction {
         data class clickedEstateType(val id:Int):UiAction

@@ -47,8 +47,11 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
             _estateTypeUi.value.title = R.string.estateType
 
             if (data.second){
-                _estateTypeUi.value.list = emptyList()
-               _estateTypeUi.value.error = _estateTypeUi.value.error.copy(R.string.errorMessage,true)
+                _estateTypeUi.value = _estateTypeUi.value.copy(
+                 list = emptyList(),
+                    error =  Pair(R.string.errorMessage,true)
+
+                )
             }else{
                 _estateTypeUi.value.list = data.first.map { estateType ->
                     estateType.copy(
@@ -56,7 +59,7 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
                         backColor = if (estateType.id == 1) 0xFF0000FF else 0xFFFFFFFF
                     )
                 }
-                _estateTypeUi.value.error = _estateTypeUi.value.error.copy(R.string.empty,false)
+                _estateTypeUi.value.error = Pair(R.string.empty,false)
             }
         }
 
@@ -67,7 +70,7 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
             _categoryUi.value.title = R.string.categories
             if (data.second){
                 _categoryUi.value.list = emptyList()
-                _categoryUi.value.error = _categoryUi.value.error.copy(R.string.errorMessage,true)
+                _categoryUi.value.error = Pair(R.string.errorMessage,true)
             }else{
                 _categoryUi.value.list = data.first.map { category ->
                     category.copy(
@@ -77,7 +80,6 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
                 }
                 _categoryUi.value.error = _categoryUi.value.error.copy(R.string.empty,false)
             }
-
         }
     }
 

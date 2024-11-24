@@ -31,7 +31,7 @@ class HomeViewModelTest {
 
 
     private lateinit var viewModel: HomeViewModelInterface
-    private lateinit var service: HomeServiceInterface
+    private lateinit var service: MockHomeService
 
     @Before
     fun setup(){
@@ -46,6 +46,39 @@ class HomeViewModelTest {
 
     }
 
+
+    @Test
+    fun `when open home screen ,return estaTypeUi not error `() = runTest{
+        val state = viewModel.estateTypeUi.value
+        assertEquals(state.error.second,false)
+        assertEquals(state.error.first,R.string.empty)
+    }
+
+    @Test
+    fun `when open home screen ,return categoryUi not error `() = runTest{
+        val state = viewModel.categoryUi.value
+        assertEquals(state.error.second,false)
+        assertEquals(state.error.first,R.string.empty)
+    }
+
+    @Test
+    fun `when open home screen ,return estaTypeUi error `() {
+        service.estateTypeError = true
+        val state = viewModel.estateTypeUi.value
+
+        assertEquals(state.error.second,true)
+        assertEquals(state.error.first,R.string.errorMessage)
+    }
+
+    @Test
+    fun `when open home screen ,return categoryUi error `() {
+        service.categoryError = true
+        val state = viewModel.categoryUi.value
+
+
+        assertEquals(state.error.second,true)
+        assertEquals(state.error.first,R.string.errorMessage)
+    }
 
     @Test
     fun `when open home screen ,return estaTypeUi `() = runTest{
