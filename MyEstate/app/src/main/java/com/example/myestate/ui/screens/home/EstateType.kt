@@ -5,5 +5,8 @@ import java.io.Serializable
 
 data class EstateType (
    @SerializedName("id") val id: Int,
-   @SerializedName("type") val type: String
+   @SerializedName("type") val type: String,
+   val isSelected: Boolean = false,
+   val textColor: Long = 0xFF52607D,
+   val backColor : Long = 0xFFFFFFFF
 ) : Serializable

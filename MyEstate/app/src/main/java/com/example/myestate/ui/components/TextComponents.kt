@@ -46,14 +46,17 @@ object TextComponents {
     fun NormalText(
         title:String,
         color:Color = Color.White,
-        fontWeight: FontWeight = FontWeight.Normal
+        fontWeight: FontWeight = FontWeight.Normal,
+        modifier: Modifier = Modifier
 
     ) {
         Text(
             title,
             color = color,
             style = MaterialTheme.typography.bodyLarge,
-            fontWeight = fontWeight
+            fontWeight = fontWeight,
+            modifier = modifier
+
         )
     }
 
