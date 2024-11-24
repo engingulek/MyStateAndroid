@@ -31,31 +31,37 @@ fun CategoriesList(viewModel: HomeViewModel){
             getStringRes(categoryUiState.title),
             color = Color.Black,
             modifier = Modifier.padding(horizontal = 10.dp))
-        LazyRow   {
-            items(categoryUiState.list){ category ->
-                Box(
-                    modifier = Modifier
-                        .padding(horizontal = 10.dp)
-                        .background(
-                            color = Color(category.backColor),
-                            shape = RoundedCornerShape(12.dp)
+        if (categoryUiState.error.second){
+            Column {
+                TextComponents.NormalText(getStringRes(categoryUiState.error.first), Color.Red)
+            }
+        }else{
+            LazyRow   {
+                items(categoryUiState.list){ category ->
+                    Box(
+                        modifier = Modifier
+                            .padding(horizontal = 10.dp)
+                            .background(
+                                color = Color(category.backColor),
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .border(width = 1.dp,
+                                color = Color.LightGray,
+                                shape = RoundedCornerShape(12.dp)
+                            ).clickable {
+                                viewModel.onAction(HomeContract.UiAction.clickedCategory(category.id))
+                            }
+                    ) {
+
+                        TextComponents.NormalText(
+                            category.name,
+                            color = Color(category.textColor),
+                            modifier = Modifier.padding(10.dp)
+
                         )
-                        .border(width = 1.dp,
-                            color = Color.LightGray,
-                            shape = RoundedCornerShape(12.dp)
-                        ).clickable {
-                            viewModel.onAction(HomeContract.UiAction.clickedCategory(category.id))
-                        }
-                ) {
+                    }
 
-                    TextComponents.NormalText(
-                        category.name,
-                        color = Color(category.textColor),
-                        modifier = Modifier.padding(10.dp)
-
-                    )
                 }
-
             }
         }
     }

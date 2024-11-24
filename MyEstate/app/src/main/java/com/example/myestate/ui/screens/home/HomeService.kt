@@ -8,32 +8,33 @@ import javax.inject.Inject
 
 interface HomeServiceInterface {
   suspend  fun fetchAllEstateType()
-  suspend   fun getAllEstateType() : List<EstateType>
+  suspend   fun getAllEstateType() : Pair<List<EstateType>,Boolean>
 
   suspend fun fetchAllCategory()
-  suspend fun getAllCategory() : List<Category>
+  suspend fun getAllCategory() : Pair<List<Category>,Boolean>
 }
 
 
 class HomeService @Inject constructor(private val apiService: ApiService) : HomeServiceInterface {
-    private var estateTypeList : List<EstateType> = emptyList()
-    private var categoryList : List<Category> = emptyList()
+    private var estateTypeList : Pair<List<EstateType>,Boolean> = Pair(emptyList(),false)
+    private var categoryList :  Pair<List<Category>,Boolean> = Pair(emptyList(),false)
 
     override suspend fun fetchAllEstateType() {
         try {
             val response = apiService.getAllEstateTypes()
             if (response.isSuccessful) {
-                estateTypeList = response.body() ?: emptyList()
+                val list =   response.body() ?: emptyList()
+                estateTypeList = Pair(list,false)
             } else {
-                Log.e("Service Error", "Error fetching data: ${response.code()}")
+                estateTypeList = Pair(emptyList(),true)
             }
         } catch (t: Throwable) {
-            estateTypeList = emptyList()
+            estateTypeList = Pair(emptyList(),true)
             Log.e("Service Error", "Error: ${t.message}")
         }
     }
 
-    override suspend  fun getAllEstateType() : List<EstateType>  {
+    override suspend  fun getAllEstateType() :Pair<List<EstateType>,Boolean>  {
         return estateTypeList
     }
 
@@ -41,17 +42,19 @@ class HomeService @Inject constructor(private val apiService: ApiService) : Home
         try {
             val response = apiService.getAllCategories()
             if (response.isSuccessful) {
-                categoryList = response.body() ?: emptyList()
+                val list =   response.body() ?: emptyList()
+                categoryList = Pair(list,false)
             } else {
+                categoryList = Pair(emptyList(),true)
                 Log.e("Service Error", "Error fetching data: ${response.code()}")
             }
         } catch (t: Throwable) {
-            categoryList = emptyList()
+            categoryList = Pair(emptyList(),true)
             Log.e("Service Error", "Error: ${t.message}")
         }
     }
 
-    override suspend fun getAllCategory(): List<Category> {
+    override suspend fun getAllCategory(): Pair<List<Category>,Boolean> {
         return  categoryList
     }
 }

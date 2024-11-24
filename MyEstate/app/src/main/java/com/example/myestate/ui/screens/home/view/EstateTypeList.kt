@@ -29,6 +29,7 @@ import com.example.myestate.ui.screens.home.HomeContract
 import com.example.myestate.ui.screens.home.HomeScreen
 import com.example.myestate.ui.screens.home.HomeService
 import com.example.myestate.ui.screens.home.HomeViewModel
+import com.example.myestate.ui.screens.home.models.EstateType
 import com.example.myestate.utils.getStringRes
 import okhttp3.internal.wait
 
@@ -46,35 +47,45 @@ fun EstateTypeList(
         TextComponents.SubTitle(
             getStringRes(estateTypeUiState.title),
             color = Color.Black)
-        LazyRow {
-            items(estateTypeUiState.list){ estateType ->
-                Box(
-                    modifier = Modifier
-                        .padding(horizontal = 10.dp)
-                        .background(
-                            color = Color(estateType.backColor),
-                            shape = RoundedCornerShape(12.dp)
+
+        if(estateTypeUiState.error.second){
+            Column {
+                TextComponents.NormalText(getStringRes(estateTypeUiState.error.first), Color.Red)
+            }
+        }else{
+            LazyRow {
+                items(estateTypeUiState.list){ estateType ->
+                    Box(
+                        modifier = Modifier
+                            .padding(horizontal = 10.dp)
+                            .background(
+                                color = Color(estateType.backColor),
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                            .border(width = 1.dp,
+                                color = Color.LightGray,
+                                shape = RoundedCornerShape(12.dp)
+                            ).clickable {
+                                viewModel.onAction(HomeContract.UiAction.clickedEstateType(estateType.id))
+                            }
+                    ) {
+
+                        TextComponents.NormalText(
+                            estateType.type,
+                            color = Color(estateType.textColor),
+                            modifier = Modifier.padding(10.dp)
+
                         )
-                        .border(width = 1.dp,
-                            color = Color.LightGray,
-                            shape = RoundedCornerShape(12.dp)
-                        ).clickable {
-                            viewModel.onAction(HomeContract.UiAction.clickedEstateType(estateType.id))
-                        }
-                ) {
+                    }
 
-                    TextComponents.NormalText(
-                        estateType.type,
-                        color = Color(estateType.textColor),
-                        modifier = Modifier.padding(10.dp)
-
-                    )
                 }
-
             }
         }
+
     }
 }
+
+
 
 /*@Preview(showBackground = true)
 @Composable
