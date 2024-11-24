@@ -1,6 +1,6 @@
 package com.example.myestate.home
 
-import com.example.myestate.ui.screens.home.EstateType
+import com.example.myestate.ui.screens.home.models.EstateType
 import com.example.myestate.ui.screens.home.HomeServiceInterface
 
 class MockHomeService : HomeServiceInterface {

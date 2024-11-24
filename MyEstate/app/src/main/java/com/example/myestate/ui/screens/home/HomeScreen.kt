@@ -25,7 +25,7 @@ fun HomeScreen(
        EstateTypeList(
            viewModel = viewModel
            )
-       CategoriesList(state = uiState)
+       CategoriesList(viewModel=viewModel)
        AdvertList(
            navigateToDetail,
            state = uiState)
