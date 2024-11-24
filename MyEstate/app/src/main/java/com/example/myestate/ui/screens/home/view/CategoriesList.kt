@@ -35,8 +35,7 @@ fun CategoriesList(state:HomeContract.UiState){
                     if(index == 0) Color.White else
                         Color.Blue,
                     if(index == 0) Color.Blue else
-                        Color.White,
-                    Modifier.padding(10.dp))
+                        Color.White)
             }
         }
     }

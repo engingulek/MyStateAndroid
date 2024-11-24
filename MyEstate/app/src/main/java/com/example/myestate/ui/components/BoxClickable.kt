@@ -2,6 +2,7 @@ package com.example.myestate.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,7 +16,7 @@ fun BoxClickable(
     title:String,
     textColor: Color,
     backColor: Color,
-    modifier: Modifier
+
                  ) {
 
     Box(
@@ -28,13 +29,16 @@ fun BoxClickable(
             .border(width = 1.dp,
                 color = Color.LightGray,
                 shape = RoundedCornerShape(12.dp)
-            )
+            ).clickable {
+
+            }
     ) {
 
-        TextComponents.NormalClickableText(
+        TextComponents.NormalText(
             title,
             color = textColor,
-            modifier = modifier
+            modifier = Modifier.padding(10.dp)
+
         )
     }
 }
