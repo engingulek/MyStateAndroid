@@ -9,7 +9,7 @@ import com.example.myestate.ui.screens.home.models.EstateType
 object HomeContract {
 
     data class UiState(
-        var error:Pair<Int,Boolean> = Pair(R.string.empty, false)
+        var error:Pair<Int,Boolean> = Pair(R.string.empty, true)
     )
 
     data class  EstateTypeUiState(
