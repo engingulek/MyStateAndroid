@@ -11,6 +11,17 @@ object AdvertDetailContract {
         var estateType:Int = R.string.empty,
         var advertDate:Int = R.string.empty,
         var age:Int = R.string.empty,
-        var floors:Int = R.string.empty
+        var floors:Int = R.string.empty,
+
     )
+
+    data class AdvertDetailState(
+       var advertDetail:AdvertDetail? = null,
+        var error:Pair<Int,Boolean> = Pair(R.string.errorMessage,true),
+       var selectedImageUrl:String  = ""
+    )
+
+    sealed interface UIAction {
+        data class clickedImage(val image:String) : UIAction
+    }
 }

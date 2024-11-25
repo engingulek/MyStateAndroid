@@ -21,7 +21,7 @@ import org.w3c.dom.Text
 
 @Composable
 fun HomeScreen(
-    navigateToDetail: () -> Unit,
+    navigateToDetail: (Int) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.state.collectAsState()

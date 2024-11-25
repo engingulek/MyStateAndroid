@@ -1,6 +1,8 @@
 package com.example.myestate.di
 
 import com.example.myestate.retrofit.ApiService
+import com.example.myestate.ui.screens.detail.AdvertDetailService
+import com.example.myestate.ui.screens.detail.AdvertDetailServiceInterface
 import com.example.myestate.ui.screens.home.HomeService
 import com.example.myestate.ui.screens.home.HomeServiceInterface
 import com.example.myestate.utils.Constants.BASE_URL
@@ -29,5 +31,11 @@ class AppModule {
     @Singleton
     fun provideHomeService(apiService: ApiService) : HomeServiceInterface{
         return   HomeService(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAdvertDetail(apiService: ApiService) : AdvertDetailServiceInterface {
+        return  AdvertDetailService(apiService)
     }
 }

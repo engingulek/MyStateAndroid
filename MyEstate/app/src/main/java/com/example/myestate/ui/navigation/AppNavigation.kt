@@ -3,9 +3,11 @@ package com.example.myestate.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.navArgument
 import com.example.myestate.ui.screens.detail.AdvertDetailScreen
 import com.example.myestate.ui.screens.home.HomeScreen
 import com.example.myestate.ui.screens.splash.SplashScreen
@@ -29,12 +31,18 @@ fun AppNavigation(
 
         composable("homeScreen"){
             HomeScreen(
-                navigateToDetail = {navHostController.navigate("advertDetailScreen")}
+                navigateToDetail = { advertId ->
+                    navHostController.navigate("advertDetailScreen/$advertId")
+                }
             )
         }
 
-        composable("advertDetailScreen"){
-            AdvertDetailScreen()
+        composable(
+            "advertDetailScreen/{advertId}",
+            arguments = listOf(navArgument("advertId"){type = NavType.IntType})
+        ){ backStackEntry ->
+            val advertId = backStackEntry.arguments?.getInt("advertId")
+            AdvertDetailScreen(advertId)
         }
     }
 }

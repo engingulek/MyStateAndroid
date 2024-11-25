@@ -9,26 +9,34 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myestate.ui.components.TextComponents
 import com.example.myestate.ui.screens.detail.views.AdvertDetailBaseInfo
 import com.example.myestate.ui.screens.detail.views.AdvertDetailImage
 import com.example.myestate.utils.getStringRes
+import com.example.myestate.utils.toFormatPrice
 
 
 @Composable
-fun AdvertDetailScreen() {
-    val viewModel : AdvertDetailViewModelInterface = AdvertDetailViewModel()
+fun AdvertDetailScreen(
+    advertId:Int?,
+    viewModel: AdvertDetailViewModel = hiltViewModel()
+) {
+    viewModel.getAdvertId(advertId)
     val state = viewModel.state.value
+    val advertDetailState by viewModel.advertDetail.collectAsState()
     LazyColumn {
         item {
-            AdvertDetailImage()
-            AdvertDetailBaseInfo()
+            AdvertDetailImage(advertDetailState, viewModel)
+            AdvertDetailBaseInfo(advertDetailState)
             Column(
                 Modifier.padding(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -37,14 +45,14 @@ fun AdvertDetailScreen() {
                 TextComponents.SubTitle(
                     getStringRes(state.advertInfoTitle),
                     color = Color.Black)
-                SubBaseInfoText(title = getStringRes( state.price), value = "20.000Tl", type = "price")
-                SubBaseInfoText(title = getStringRes(state.advertId), value = "#13231321")
-                SubBaseInfoText(title = getStringRes(state.estateType), value = "Rent")
-                SubBaseInfoText(title = getStringRes(state.advertDate), value = "23.11.2024")
-                SubBaseInfoText(title = getStringRes(state.age), value = "10")
-                SubBaseInfoText(title = getStringRes(state.floors), value = "3")
+                SubBaseInfoText(title = getStringRes( state.price), value = "${advertDetailState.advertDetail?.price}Tl", type = "price")
+                SubBaseInfoText(title = getStringRes(state.advertId), value = "#${advertDetailState.advertDetail?.id}")
+                SubBaseInfoText(title = getStringRes(state.estateType), value = "${advertDetailState.advertDetail?.estateType}")
+                SubBaseInfoText(title = getStringRes(state.advertDate), value = "${advertDetailState.advertDetail?.advertDate}")
+                SubBaseInfoText(title = getStringRes(state.age), value = "${advertDetailState.advertDetail?.age}")
+                SubBaseInfoText(title = getStringRes(state.floors), value = "${advertDetailState.advertDetail?.floors}")
                 TextComponents.SubTitle(getStringRes(viewModel.state.value.descriptionTitle), Color.Black)
-                TextComponents.NormalText("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",Color.Black)
+                TextComponents.NormalText("${advertDetailState.advertDetail?.description}",Color.Black)
             }
         }
     }
@@ -77,5 +85,5 @@ private fun SubBaseInfoText(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun AdvertDetailScreenPreview() {
-    AdvertDetailScreen()
+    AdvertDetailScreen(-1)
 }
