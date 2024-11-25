@@ -37,7 +37,7 @@ import com.example.myestate.utils.toFormatPrice
 
 @Composable
 fun AdvertList(
-    navigateToDetail: () -> Unit,
+    navigateToDetail: (Int) -> Unit,
     viewModel: HomeViewModel) {
     val advertOnHomeUiState by viewModel.advertOnHomeUi.collectAsState()
     Column(verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -70,7 +70,7 @@ fun AdvertList(
                         .background(Color.White)
                         .padding(5.dp)
                         .clickable {
-                            navigateToDetail()
+                            navigateToDetail(advert.id)
                         }
 
                     ){
@@ -137,7 +137,7 @@ private fun AdvertInfo(advertOnHome: AdvertOnHome) {
         Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
             Text(advertOnHome.advertDate)
             TextComponents.NormalText(
-                "${advertOnHome.price.toFormatPrice()}/${advertOnHome.estateType}",
+                "${advertOnHome.price.toFormatPrice()}Tl/${advertOnHome.estateType}",
                 color = Color.Black)
             Text(advertOnHome.category)
         }

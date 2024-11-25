@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class AdvertOnHome (
-   @SerializedName("id") val id: Long,
+   @SerializedName("id") val id: Int,
    @SerializedName("images") val images: List<String>,
    @SerializedName("title") val title: String,
    @SerializedName("squareMeter") val squareMeter: Long,

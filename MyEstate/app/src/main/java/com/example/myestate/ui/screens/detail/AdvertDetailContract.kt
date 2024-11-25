@@ -13,4 +13,10 @@ object AdvertDetailContract {
         var age:Int = R.string.empty,
         var floors:Int = R.string.empty
     )
+
+    data class AdvertDetailState(
+       var advertDetail:AdvertDetail? = null,
+        var error:Pair<Int,Boolean> = Pair(R.string.errorMessage,true)
+
+    )
 }
