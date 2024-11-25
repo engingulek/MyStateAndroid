@@ -35,7 +35,7 @@ fun AdvertDetailScreen(
     val advertDetailState by viewModel.advertDetail.collectAsState()
     LazyColumn {
         item {
-            AdvertDetailImage(advertDetailState.advertDetail?.images)
+            AdvertDetailImage(advertDetailState, viewModel)
             AdvertDetailBaseInfo(advertDetailState)
             Column(
                 Modifier.padding(10.dp),

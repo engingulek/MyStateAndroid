@@ -18,6 +18,7 @@ interface AdvertDetailViewModelInterface{
     var state : State<AdvertDetailContract.UiState>
     var advertDetail : StateFlow<AdvertDetailContract.AdvertDetailState>
     fun getAdvertId(id:Int?)
+    fun onAction(action:AdvertDetailContract.UIAction)
 }
 
 @HiltViewModel
@@ -41,6 +42,12 @@ class AdvertDetailViewModel @Inject constructor(
            getAdvertDetail(id)
        }
 
+    }
+
+    override fun onAction(action: AdvertDetailContract.UIAction) {
+        when(action){
+            is AdvertDetailContract.UIAction.clickedImage -> onClickedImage(action.image)
+        }
     }
 
 
@@ -70,10 +77,18 @@ class AdvertDetailViewModel @Inject constructor(
                 data.first?.let {
                     _advertDetailState.value = _advertDetailState.value.copy(
                         advertDetail = it,
-                        error = Pair(R.string.empty,false)
+                        error = Pair(R.string.empty,false),
+                        selectedImageUrl = it.images[0]
                     )
+
                 }
             }
         }
+    }
+
+    private fun onClickedImage(image:String){
+        _advertDetailState.value = _advertDetailState.value.copy(
+            selectedImageUrl = image
+        )
     }
 }
