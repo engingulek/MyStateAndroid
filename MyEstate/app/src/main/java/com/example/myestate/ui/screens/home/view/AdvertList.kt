@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -38,7 +39,7 @@ import com.example.myestate.utils.toFormatPrice
 fun AdvertList(
     navigateToDetail: () -> Unit,
     viewModel: HomeViewModel) {
-    val advertOnHomeUiState by viewModel.advertOnHometUi.collectAsState()
+    val advertOnHomeUiState by viewModel.advertOnHomeUi.collectAsState()
     Column(verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -48,24 +49,38 @@ fun AdvertList(
             getStringRes(advertOnHomeUiState.title),
             color = Color.Black,
             modifier = Modifier.padding(horizontal = 10.dp))
-        LazyColumn   {
-            items(advertOnHomeUiState.list){ advert ->
-                Column (modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(Color.White)
-                    .padding(5.dp)
-                    .clickable {
-                        navigateToDetail()
-                    }
+        if (advertOnHomeUiState.message.second){
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
 
-                ){
-                    ImageInfo(advert.images[0])
-                    AdvertInfo(advert)
+            ){
+                TextComponents.HeadlineTitle(
+                    getStringRes(advertOnHomeUiState.message.first),
+                    Color.Red)
+            }
+        }else{
+            LazyColumn   {
+                items(advertOnHomeUiState.list){ advert ->
+                    Column (modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(Color.White)
+                        .padding(5.dp)
+                        .clickable {
+                            navigateToDetail()
+                        }
+
+                    ){
+                        ImageInfo(advert.images[0])
+                        AdvertInfo(advert)
+                    }
                 }
             }
         }
+
     }
 }
 
@@ -124,6 +139,7 @@ private fun AdvertInfo(advertOnHome: AdvertOnHome) {
             TextComponents.NormalText(
                 "${advertOnHome.price.toFormatPrice()}/${advertOnHome.estateType}",
                 color = Color.Black)
+            Text(advertOnHome.category)
         }
     }
 }

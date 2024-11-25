@@ -9,7 +9,7 @@ import com.example.myestate.ui.screens.home.models.EstateType
 object HomeContract {
 
     data class UiState(
-        var error:Pair<Int,Boolean> = Pair(R.string.empty, true)
+        var error:Pair<Int,Boolean> = Pair(R.string.empty, false)
     )
 
     data class  EstateTypeUiState(
@@ -27,7 +27,8 @@ object HomeContract {
 
     data class AdvertOnHomeUiState(
         var title:Int = R.string.empty,
-        var list  : List<AdvertOnHome> = emptyList()
+        var list  : List<AdvertOnHome> = emptyList(),
+        var message:Pair<Int,Boolean> = Pair(R.string.empty,true)
     )
 
     sealed interface UiAction {

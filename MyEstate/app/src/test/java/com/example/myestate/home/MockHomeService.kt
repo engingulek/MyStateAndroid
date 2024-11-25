@@ -57,7 +57,7 @@ class MockHomeService : HomeServiceInterface {
             val list = listOf(
                 AdvertOnHome(1, emptyList(),
                     "testtitlr",123,
-                    "testCity","testDistrict","tesst date","testestype",100000)
+                    "testCity","testDistrict","tesst date","testestype",100000, "testcategory")
             )
             advertOnHomeList = Pair(list,false)
         }

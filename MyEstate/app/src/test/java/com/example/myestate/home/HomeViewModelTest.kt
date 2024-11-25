@@ -68,7 +68,7 @@ class HomeViewModelTest {
         assertEquals(state.error.second,false)
         assertEquals(state.error.first,R.string.empty)
 
-        val advertui = viewModel.advertOnHometUi.value
+        val advertui = viewModel.advertOnHomeUi.value
         assertEquals(advertui.title,R.string.adverts)
     }
 

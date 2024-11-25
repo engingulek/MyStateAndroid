@@ -12,5 +12,6 @@ data class AdvertOnHome (
    @SerializedName("district") val district: String,
    @SerializedName("advertDate") val advertDate: String,
    @SerializedName("estateType") val estateType: String,
-   @SerializedName("price") val price: Long
+   @SerializedName("price") val price: Long,
+   @SerializedName("category") val category: String
 ) : Serializable
