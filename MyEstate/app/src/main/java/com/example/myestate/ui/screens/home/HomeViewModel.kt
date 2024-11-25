@@ -13,6 +13,7 @@ interface HomeViewModelInterface {
     var state : StateFlow<HomeContract.UiState>
     val estateTypeUi: StateFlow<HomeContract.EstateTypeUiState>
     val categoryUi : StateFlow<HomeContract.CategoryUiState>
+    val advertOnHometUi : StateFlow<HomeContract.AdvertOnHomeUiState>
     fun onAction(action:HomeContract.UiAction)
 }
 
@@ -27,16 +28,13 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
     private val _categoryUi = MutableStateFlow(HomeContract.CategoryUiState())
    override val categoryUi : StateFlow<HomeContract.CategoryUiState> = _categoryUi
 
+    private val _advertOnHomeUi = MutableStateFlow(HomeContract.AdvertOnHomeUiState())
+    override val advertOnHometUi : StateFlow<HomeContract.AdvertOnHomeUiState> = _advertOnHomeUi
+
+
 
     init {
-        writeUiState()
         fetchData()
-    }
-
-    private fun writeUiState(){
-
-
-
     }
 
     private fun fetchData(){
@@ -79,6 +77,19 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
                     )
                 }
                 _categoryUi.value.error = _categoryUi.value.error.copy(R.string.empty,false)
+            }
+        }
+
+        // adverts
+        viewModelScope.launch {
+            service.fetchAllAdvertsOnHome()
+            val data = service.getAllAdvertsOnHome()
+            _advertOnHomeUi.value.title = R.string.adverts
+            if(data.second){
+                _advertOnHomeUi.value.list = emptyList()
+                _uiState.value.error =  Pair(R.string.errorMessage,true)
+            }else{
+                advertOnHometUi.value.list = data.first
             }
         }
     }
