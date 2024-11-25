@@ -16,4 +16,6 @@
     <string name="age">Age</string>
     <string name="advertDate">AdvertDate</string>
     <string name="Floors">Floors</string>
+    <string name="errorMessage">Something went wrong</string>
+    <string name="noData">No Data</string>
 </resources>

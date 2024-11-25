@@ -43,9 +43,9 @@ fun AdvertList(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .padding(vertical = 10.dp)) {
-        //Categories
+
         TextComponents.SubTitle(
-            getStringRes(state.advertTitle),
+            "",
             color = Color.Black,
             modifier = Modifier.padding(horizontal = 10.dp))
         LazyColumn   {
