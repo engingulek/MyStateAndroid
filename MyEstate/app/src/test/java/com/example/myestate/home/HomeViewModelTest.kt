@@ -170,4 +170,15 @@ class HomeViewModelTest {
             }
         }
     }
+
+    @Test
+    fun `when click category and estateType for filter ,return empty list `() = runTest{
+        viewModel.onAction(HomeContract.UiAction.clickedCategory(3))
+        viewModel.onAction(HomeContract.UiAction.clickedEstateType(2))
+        val state = viewModel.advertOnHomeUi.value
+
+        assertEquals(R.string.noData,state.message.first)
+        assertEquals(true,state.message.second)
+    }
+    
 }

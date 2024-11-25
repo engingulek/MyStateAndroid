@@ -152,6 +152,7 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
             list = updateList
         )
         selectedCategory = updateList.filter { it.id == id }[0].name
+
         filterAdvert()
     }
 
