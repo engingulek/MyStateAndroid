@@ -1,8 +1,10 @@
 package com.example.myestate.ui.screens.home
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myestate.R
+import com.example.myestate.ui.screens.home.models.AdvertOnHome
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +15,7 @@ interface HomeViewModelInterface {
     var state : StateFlow<HomeContract.UiState>
     val estateTypeUi: StateFlow<HomeContract.EstateTypeUiState>
     val categoryUi : StateFlow<HomeContract.CategoryUiState>
+    val advertOnHomeUi : StateFlow<HomeContract.AdvertOnHomeUiState>
     fun onAction(action:HomeContract.UiAction)
 }
 
@@ -27,16 +30,17 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
     private val _categoryUi = MutableStateFlow(HomeContract.CategoryUiState())
    override val categoryUi : StateFlow<HomeContract.CategoryUiState> = _categoryUi
 
+    private val _advertOnHomeUi = MutableStateFlow(HomeContract.AdvertOnHomeUiState())
+    override val advertOnHomeUi : StateFlow<HomeContract.AdvertOnHomeUiState> = _advertOnHomeUi
+    private var tempAdvertList : List<AdvertOnHome> = emptyList()
+
+    private var selectedEstateType:String = "All"
+    private var selectedCategory:String = "All"
+
+
 
     init {
-        writeUiState()
         fetchData()
-    }
-
-    private fun writeUiState(){
-
-
-
     }
 
     private fun fetchData(){
@@ -48,18 +52,20 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
 
             if (data.second){
                 _estateTypeUi.value = _estateTypeUi.value.copy(
-                 list = emptyList(),
+                    list = emptyList(),
                     error =  Pair(R.string.errorMessage,true)
-
                 )
             }else{
-                _estateTypeUi.value.list = data.first.map { estateType ->
-                    estateType.copy(
-                        textColor = if(estateType.id == 1) 0xFFFFFFFF else 0xFF52607D,
-                        backColor = if (estateType.id == 1) 0xFF0000FF else 0xFFFFFFFF
-                    )
-                }
-                _estateTypeUi.value.error = Pair(R.string.empty,false)
+
+                _estateTypeUi.value = _estateTypeUi.value.copy(
+                    list = data.first.map { estateType ->
+                        estateType.copy(
+                            textColor = if(estateType.id == 1) 0xFFFFFFFF else 0xFF52607D,
+                            backColor = if (estateType.id == 1) 0xFF0000FF else 0xFFFFFFFF
+                        )
+                    },
+                    error = Pair(R.string.empty,false)
+                )
             }
         }
 
@@ -69,16 +75,42 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
             val data = service.getAllCategory()
             _categoryUi.value.title = R.string.categories
             if (data.second){
-                _categoryUi.value.list = emptyList()
-                _categoryUi.value.error = Pair(R.string.errorMessage,true)
+                _categoryUi.value = _categoryUi.value.copy(
+                    title = R.string.adverts,
+                    list = emptyList(),
+                    error = Pair(R.string.errorMessage,true)
+                )
             }else{
-                _categoryUi.value.list = data.first.map { category ->
-                    category.copy(
-                        textColor = if(category.id == 1) 0xFFFFFFFF else 0xFF52607D,
-                        backColor = if (category.id == 1) 0xFF0000FF else 0xFFFFFFFF
-                    )
-                }
-                _categoryUi.value.error = _categoryUi.value.error.copy(R.string.empty,false)
+                _categoryUi.value = _categoryUi.value.copy(
+                    list = data.first.map { category ->
+                        category.copy(textColor = if(category.id == 1) 0xFFFFFFFF else 0xFF52607D,
+                            backColor = if (category.id == 1) 0xFF0000FF else 0xFFFFFFFF)
+                    },
+                    error = Pair(R.string.empty,false)
+                )
+            }
+        }
+
+        // adverts
+        viewModelScope.launch {
+            service.fetchAllAdvertsOnHome()
+            val data = service.getAllAdvertsOnHome()
+            _advertOnHomeUi.value.title = R.string.adverts
+            if(data.second){
+                _advertOnHomeUi.value = _advertOnHomeUi.value.copy(
+                    list = emptyList(),
+                )
+                _uiState.value = _uiState.value.copy(
+                    error = Pair(R.string.errorMessage,true)
+                )
+                tempAdvertList = emptyList()
+
+            }else{
+                tempAdvertList = data.first
+                _advertOnHomeUi.value = _advertOnHomeUi.value.copy(
+                    list = data.first,
+                    message = Pair(R.string.empty,false)
+                )
             }
         }
     }
@@ -101,6 +133,11 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
         _estateTypeUi.value = _estateTypeUi.value.copy(
             list = updateList
         )
+
+        selectedEstateType = updateList.filter { it.id == id }[0].type
+
+        filterAdvert()
+
     }
 
     private fun onClickCategory(id:Int){
@@ -114,5 +151,28 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
         _categoryUi.value = _categoryUi.value.copy(
             list = updateList
         )
+        selectedCategory = updateList.filter { it.id == id }[0].name
+
+        filterAdvert()
+    }
+
+    private fun filterAdvert(){
+     val filterList = tempAdvertList.filter { advertOnHome ->
+          val estateTypes = selectedEstateType.lowercase() == "all" || selectedEstateType.lowercase() == advertOnHome.estateType.lowercase()
+          val categories = selectedCategory.lowercase() == "all"  || selectedCategory.lowercase() == advertOnHome.category.lowercase()
+          estateTypes && categories
+      }
+
+        if (filterList.isEmpty()){
+            _advertOnHomeUi.value = _advertOnHomeUi.value.copy(
+                list = emptyList(),
+                message = Pair(R.string.noData,true)
+            )
+        }else{
+            _advertOnHomeUi.value = _advertOnHomeUi.value.copy(
+                list = filterList,
+                message = Pair(R.string.empty,false)
+            )
+        }
     }
 }

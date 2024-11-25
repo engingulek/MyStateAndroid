@@ -2,13 +2,16 @@ package com.example.myestate.home
 
 import com.example.myestate.ui.screens.home.models.EstateType
 import com.example.myestate.ui.screens.home.HomeServiceInterface
+import com.example.myestate.ui.screens.home.models.AdvertOnHome
 import com.example.myestate.ui.screens.home.models.Category
 
 class MockHomeService : HomeServiceInterface {
     var estateTypeError : Boolean = false
     var categoryError : Boolean = false
+    var advertOnHomeError : Boolean = false
     private var estateTypeList:Pair<List<EstateType>,Boolean> = Pair(emptyList(),false)
     private var categoryList :  Pair<List<Category>,Boolean> = Pair(emptyList(),false)
+    private var advertOnHomeList : Pair<List<AdvertOnHome>,Boolean> = Pair(emptyList(),false)
     override suspend fun fetchAllEstateType() {
         if (estateTypeError){
             estateTypeList = Pair(emptyList(),true)
@@ -45,5 +48,26 @@ class MockHomeService : HomeServiceInterface {
 
     override suspend fun getAllCategory(): Pair<List<Category>,Boolean> {
         return  categoryList
+    }
+
+    override suspend fun fetchAllAdvertsOnHome() {
+        if (advertOnHomeError){
+            advertOnHomeList = Pair(emptyList(),true)
+        }else{
+            val list = listOf(
+                AdvertOnHome(1, emptyList(),
+                    "testtitlr",123,
+                    "testCity","testDistrict","tesst date","testestype",100000, "testcategory"),
+
+                        AdvertOnHome(1, emptyList(),
+                "testtitlr",123,
+                "testCity","testDistrict","tesst date","Rent",100000, "Flat")
+            )
+            advertOnHomeList = Pair(list,false)
+        }
+    }
+
+    override suspend fun getAllAdvertsOnHome(): Pair<List<AdvertOnHome>, Boolean> {
+        return advertOnHomeList
     }
 }

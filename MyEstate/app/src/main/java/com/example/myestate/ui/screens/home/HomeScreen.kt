@@ -40,7 +40,7 @@ fun HomeScreen(
             CategoriesList(viewModel=viewModel)
             AdvertList(
                 navigateToDetail,
-                state = uiState)
+                viewModel)
         }
     }
 

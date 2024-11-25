@@ -1,4 +1,5 @@
 package com.example.myestate.retrofit
+import com.example.myestate.ui.screens.home.models.AdvertOnHome
 import com.example.myestate.ui.screens.home.models.Category
 import com.example.myestate.ui.screens.home.models.EstateType
 import retrofit2.Response
@@ -9,4 +10,7 @@ interface ApiService {
 
     @GET("categories/getAll")
     suspend fun getAllCategories() : Response<List<Category>>
+
+    @GET("adverts/getAll")
+    suspend fun getAllAdvertsOnHome() : Response<List<AdvertOnHome>>
 }
