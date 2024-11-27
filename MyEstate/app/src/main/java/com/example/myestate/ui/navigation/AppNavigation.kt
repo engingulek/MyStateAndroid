@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.example.myestate.ui.screens.detail.AdvertDetailScreen
+import com.example.myestate.ui.screens.favorite.FavoriteScreen
 import com.example.myestate.ui.screens.home.HomeScreen
 import com.example.myestate.ui.screens.splash.SplashScreen
 import com.example.myestate.ui.screens.splash.SplashScreenPreview
@@ -33,7 +34,8 @@ fun AppNavigation(
             HomeScreen(
                 navigateToDetail = { advertId ->
                     navHostController.navigate("advertDetailScreen/$advertId")
-                }
+                },
+                navigateTofFavorite = {navHostController.navigate("favoriteScreen")}
             )
         }
 
@@ -43,6 +45,10 @@ fun AppNavigation(
         ){ backStackEntry ->
             val advertId = backStackEntry.arguments?.getInt("advertId")
             AdvertDetailScreen(advertId)
+        }
+
+        composable("favoriteScreen"){
+            FavoriteScreen()
         }
     }
 }
