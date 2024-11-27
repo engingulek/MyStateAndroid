@@ -1,5 +1,6 @@
 package com.example.myestate.ui.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -13,38 +14,59 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myestate.ui.screens.home.HomeScreen
 
 @Composable
-fun AppBar(navigateToFav : () -> Unit) {
+fun AppBar(
+    title:String,
+    navigateLeftIconAction : () -> Unit? = {},
+           leftIcon : Int? = null,
+           rightIcon : Int? = null,
+           navigateRightIconAction : () -> Unit? = {},
+
+
+) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        if (leftIcon != null){
+            Image(painterResource(leftIcon),
+                contentDescription = "left icon",
+                modifier = Modifier.size(30.dp)
+                    .clickable {
+                        navigateLeftIconAction()
+                    }
+
+            )
+        }
+
 
         TextComponents.HeadlineTitle(
-            "My Estate",
+            title,
             Color.Blue,
             modifier = Modifier.weight(1f),
         )
-        Icon(
-            imageVector = Icons.Default.Favorite,
-            contentDescription = "Icon",
-            tint = Color.Blue,
-            modifier = Modifier.size(30.dp)
-                .clickable {
-                    navigateToFav()
-                }
+        if (rightIcon != null){
+            Image(painterResource(rightIcon),
+                contentDescription = "left icon",
+                modifier = Modifier.size(30.dp)
+                    .clickable {
+                        navigateRightIconAction()
+                    }
 
-        )
+            )
+        }
+
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun AppBarPreview() {
-    AppBar({})
+    AppBar("Title")
 }

@@ -48,7 +48,7 @@ fun AppNavigation(
         }
 
         composable("favoriteScreen"){
-            FavoriteScreen()
+            FavoriteScreen(popNavigation = {navHostController.popBackStack()})
         }
     }
 }
