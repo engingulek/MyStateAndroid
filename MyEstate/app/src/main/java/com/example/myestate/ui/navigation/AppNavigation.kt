@@ -6,13 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.example.myestate.ui.screens.detail.AdvertDetailScreen
 import com.example.myestate.ui.screens.favorite.FavoriteScreen
 import com.example.myestate.ui.screens.home.HomeScreen
-import com.example.myestate.ui.screens.splash.SplashScreen
-import com.example.myestate.ui.screens.splash.SplashScreenPreview
 
 @Composable
 fun AppNavigation(
@@ -22,13 +19,8 @@ fun AppNavigation(
     NavHost(
         modifier = modifier,
         navController = navHostController,
-        startDestination = "splashScreen"
+        startDestination = "homeScreen"
     ){
-        composable("splashScreen"){
-            SplashScreen(
-                navigateToHome = {navHostController.navigate("homeScreen")}
-            )
-        }
 
         composable("homeScreen"){
             HomeScreen(
