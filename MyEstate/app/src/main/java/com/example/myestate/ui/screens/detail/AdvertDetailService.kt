@@ -23,7 +23,6 @@ class AdvertDetailService @Inject constructor(private val apiService: ApiService
             }
         } catch (t: Throwable) {
             advertDetail = Pair(null,true)
-            Log.e("Service Error", "Error: ${t.message}")
         }
     }
 

@@ -54,7 +54,6 @@ fun AppBar(
                     .clickable {
                         navigateRightIconAction()
                     }
-
             )
         }
     }

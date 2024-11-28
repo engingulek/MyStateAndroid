@@ -41,7 +41,6 @@ class AdvertDetailViewModel @Inject constructor(
        id?.let {
            getAdvertDetail(id)
        }
-
     }
 
     override fun onAction(action: AdvertDetailContract.UIAction) {

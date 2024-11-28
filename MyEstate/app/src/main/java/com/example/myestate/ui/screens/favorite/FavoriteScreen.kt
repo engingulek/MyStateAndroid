@@ -67,7 +67,11 @@ fun FavoriteScreen(
                 items(state.list){ fav ->
                     FavAdvertItem(
                         fav,
-                        onClickFavIcon = {viewModel.onClickFavIcon(fav.id)}
+                        onClickFavIcon = {
+                            viewModel.onAction(
+                                FavoriteContract.UiAction.clickedFavorite(id = fav.id
+                                ))
+                        }
                     )
                 }
             }

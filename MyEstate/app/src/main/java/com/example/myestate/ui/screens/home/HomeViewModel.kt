@@ -19,7 +19,6 @@ interface HomeViewModelInterface {
     val categoryUi : StateFlow<HomeContract.CategoryUiState>
     val advertOnHomeUi : StateFlow<HomeContract.AdvertOnHomeUiState>
     fun onAction(action:HomeContract.UiAction)
-    fun onClickFavIcon(id:Int)
     fun reloadData()
 }
 
@@ -153,6 +152,7 @@ class HomeViewModel @Inject constructor(
         when(action){
             is HomeContract.UiAction.clickedEstateType -> onClickEstateType(action.id)
             is HomeContract.UiAction.clickedCategory -> onClickCategory(action.id)
+            is HomeContract.UiAction.clickedFavIcon -> onClickFavIcon(action.id)
         }
     }
 
@@ -210,7 +210,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onClickFavIcon(id: Int) {
+    private fun onClickFavIcon(id: Int) {
         val advert = _advertOnHomeUi.value.list.first { it.id == id }
         val favorite = Favorite(
             advert.id,

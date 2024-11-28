@@ -45,14 +45,37 @@ fun AdvertDetailScreen(
                 TextComponents.SubTitle(
                     getStringRes(state.advertInfoTitle),
                     color = Color.Black)
-                SubBaseInfoText(title = getStringRes( state.price), value = "${advertDetailState.advertDetail?.price}Tl", type = "price")
-                SubBaseInfoText(title = getStringRes(state.advertId), value = "#${advertDetailState.advertDetail?.id}")
-                SubBaseInfoText(title = getStringRes(state.estateType), value = "${advertDetailState.advertDetail?.estateType}")
-                SubBaseInfoText(title = getStringRes(state.advertDate), value = "${advertDetailState.advertDetail?.advertDate}")
-                SubBaseInfoText(title = getStringRes(state.age), value = "${advertDetailState.advertDetail?.age}")
-                SubBaseInfoText(title = getStringRes(state.floors), value = "${advertDetailState.advertDetail?.floors}")
-                TextComponents.SubTitle(getStringRes(viewModel.state.value.descriptionTitle), Color.Black)
-                TextComponents.NormalText("${advertDetailState.advertDetail?.description}",Color.Black)
+                SubBaseInfoText(
+                    title = getStringRes( state.price),
+                    value = "${advertDetailState.advertDetail?.price}Tl", type = "price"
+                )
+                SubBaseInfoText(
+                    title = getStringRes(state.advertId),
+                    value = "#${advertDetailState.advertDetail?.id}"
+                )
+                SubBaseInfoText(
+                    title = getStringRes(state.estateType),
+                    value = "${advertDetailState.advertDetail?.estateType}"
+                )
+                SubBaseInfoText(
+                    title = getStringRes(state.advertDate),
+                    value = "${advertDetailState.advertDetail?.advertDate}"
+                )
+                SubBaseInfoText(
+                    title = getStringRes(state.age),
+                    value = "${advertDetailState.advertDetail?.age}"
+                )
+                SubBaseInfoText(
+                    title = getStringRes(state.floors),
+                    value = "${advertDetailState.advertDetail?.floors}"
+                )
+                TextComponents.SubTitle(
+                    getStringRes(viewModel.state.value.descriptionTitle),
+                    Color.Black
+                )
+                TextComponents.NormalText(
+                    "${advertDetailState.advertDetail?.description}",
+                    Color.Black)
             }
         }
     }

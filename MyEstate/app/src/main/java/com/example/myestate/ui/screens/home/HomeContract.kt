@@ -34,6 +34,7 @@ object HomeContract {
     sealed interface UiAction {
         data class clickedEstateType(val id:Int):UiAction
         data class clickedCategory(val id:Int):UiAction
+        data class clickedFavIcon(val id:Int) : UiAction
     }
 
 
