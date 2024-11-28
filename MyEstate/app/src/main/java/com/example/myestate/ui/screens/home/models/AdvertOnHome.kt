@@ -15,5 +15,5 @@ data class AdvertOnHome (
    @SerializedName("estateType") val estateType: String,
    @SerializedName("price") val price: Long,
    @SerializedName("category") val category: String,
-   val onFavState : Boolean = false
-) : Serializable
+   var onFavState : Boolean = false
+)

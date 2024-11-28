@@ -97,6 +97,12 @@ class HomeViewModel @Inject constructor(
             }
         }
 
+        fetchAdvert()
+
+
+    }
+
+    private fun fetchAdvert() {
         // adverts
         viewModelScope.launch {
             service.fetchAllAdvertsOnHome()
@@ -114,7 +120,12 @@ class HomeViewModel @Inject constructor(
             }else{
                 tempAdvertList = data.first
                 _advertOnHomeUi.value = _advertOnHomeUi.value.copy(
-                    list = data.first,
+                    list = data.first.map {  advertOnHome ->
+                        val control = favoriteRoomService.favControl(advertOnHome.id)
+                        advertOnHome.copy(
+                            onFavState = control > 0
+                        )
+                    },
                     message = Pair(R.string.empty,false)
                 )
             }
@@ -194,10 +205,12 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val control = favoriteRoomService.favControl(id)
             if (control > 0){
-                favoriteRoomService.deleteFav(id)
+                favoriteRoomService.deleteFav(id )
             }else{
                 favoriteRoomService.addFav(favorite)
             }
         }
+
+        fetchAdvert()
     }
 }
