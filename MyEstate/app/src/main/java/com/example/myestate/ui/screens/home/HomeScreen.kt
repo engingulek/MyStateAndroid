@@ -32,6 +32,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.state.collectAsState()
+    viewModel.reloadData()
     if (uiState.error.second){
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {

@@ -3,6 +3,7 @@ package com.example.myestate.ui.screens.favorite
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -64,7 +65,10 @@ fun FavoriteScreen(
         }else{
             LazyColumn {
                 items(state.list){ fav ->
-                    FavAdvertItem(fav)
+                    FavAdvertItem(
+                        fav,
+                        onClickFavIcon = {viewModel.onClickFavIcon(fav.id)}
+                    )
                 }
             }
         }
@@ -74,7 +78,10 @@ fun FavoriteScreen(
 
 
 @Composable
-fun FavAdvertItem(fav:Favorite) {
+fun FavAdvertItem(
+    fav:Favorite,
+    onClickFavIcon : () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -101,7 +108,12 @@ fun FavAdvertItem(fav:Favorite) {
                     style = MaterialTheme.typography.titleMedium,
                     color = Color.Black
                 )
-                Image(painterResource(R.drawable.fav_icon), contentDescription = "fav icon")
+                Image(painterResource(R.drawable.fav_icon),
+                    contentDescription = "fav icon",
+                    modifier = Modifier.clickable {
+                        onClickFavIcon()
+                    }
+                    )
             }
 
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {

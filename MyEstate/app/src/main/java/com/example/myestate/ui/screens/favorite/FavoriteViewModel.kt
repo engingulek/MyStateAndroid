@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myestate.R
+import com.example.myestate.room.Favorite
 
 import com.example.myestate.room.FavoriteRoomService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(private val favoriteRoomService: FavoriteRoomService) : ViewModel() {
     private val _favUiState = MutableStateFlow(FavoriteContract.FavoriteUiState())
     val favUiState: StateFlow<FavoriteContract.FavoriteUiState> = _favUiState
+    private var tempList : List<Favorite> = emptyList()
 
     init {
         fetchFavList()
@@ -25,8 +27,8 @@ class FavoriteViewModel @Inject constructor(private val favoriteRoomService: Fav
     private fun fetchFavList(){
         viewModelScope.launch {
             val list = favoriteRoomService.getAllFav()
-            Log.e("Fav List","${list.isEmpty()}")
            if (list.isEmpty()){
+               tempList = emptyList()
                 _favUiState.value = _favUiState.value.copy(
                     title = R.string.favorites,
                     list = emptyList(),
@@ -40,8 +42,21 @@ class FavoriteViewModel @Inject constructor(private val favoriteRoomService: Fav
                     message = Pair(R.string.empty, false)
 
                 )
+               tempList = list
             }
 
+        }
+    }
+
+    fun onClickFavIcon(id:Int){
+        viewModelScope.launch {
+            favoriteRoomService.deleteFav(id)
+            tempList = tempList.filter { it.id != id }
+            _favUiState.value = _favUiState.value.copy(
+                list = tempList,
+                message = if(tempList.isEmpty()) Pair(R.string.noData, true) else  Pair(R.string.empty, false)
+
+            )
         }
     }
 }

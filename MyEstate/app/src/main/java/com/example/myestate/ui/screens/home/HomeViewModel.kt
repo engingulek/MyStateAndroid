@@ -20,6 +20,7 @@ interface HomeViewModelInterface {
     val advertOnHomeUi : StateFlow<HomeContract.AdvertOnHomeUiState>
     fun onAction(action:HomeContract.UiAction)
     fun onClickFavIcon(id:Int)
+    fun reloadData()
 }
 
 @HiltViewModel
@@ -51,6 +52,19 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchData(){
         // estate type
+        fetchEstateType()
+
+        // category
+        fetchCategory()
+
+        // advert
+        fetchAdvert()
+
+
+    }
+
+    //// estate type
+    private fun fetchEstateType(){
         viewModelScope.launch {
             service.fetchAllEstateType()
             val data = service.getAllEstateType()
@@ -74,8 +88,10 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
+    }
 
-        // category
+    // category
+    private fun fetchCategory() {
         viewModelScope.launch {
             service.fetchAllCategory()
             val data = service.getAllCategory()
@@ -96,14 +112,10 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
-
-        fetchAdvert()
-
-
     }
 
+    // adverts
     private fun fetchAdvert() {
-        // adverts
         viewModelScope.launch {
             service.fetchAllAdvertsOnHome()
             val data = service.getAllAdvertsOnHome()
@@ -118,18 +130,23 @@ class HomeViewModel @Inject constructor(
                 tempAdvertList = emptyList()
 
             }else{
-                tempAdvertList = data.first
+                tempAdvertList = data.first.map {  advertOnHome ->
+                    val control = favoriteRoomService.favControl(advertOnHome.id)
+                    advertOnHome.copy(
+                        onFavState = control > 0
+                    )
+                }
                 _advertOnHomeUi.value = _advertOnHomeUi.value.copy(
-                    list = data.first.map {  advertOnHome ->
-                        val control = favoriteRoomService.favControl(advertOnHome.id)
-                        advertOnHome.copy(
-                            onFavState = control > 0
-                        )
-                    },
+                    list = tempAdvertList,
                     message = Pair(R.string.empty,false)
                 )
+
             }
         }
+    }
+
+    override fun reloadData() {
+        fetchAdvert()
     }
 
     override fun onAction(action:HomeContract.UiAction) {
@@ -210,7 +227,6 @@ class HomeViewModel @Inject constructor(
                 favoriteRoomService.addFav(favorite)
             }
         }
-
         fetchAdvert()
     }
 }
