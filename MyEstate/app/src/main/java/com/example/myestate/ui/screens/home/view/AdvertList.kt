@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.myestate.R
 import com.example.myestate.ui.components.TextComponents
+import com.example.myestate.ui.screens.home.HomeContract
 import com.example.myestate.ui.screens.home.HomeViewModel
 import com.example.myestate.ui.screens.home.models.AdvertOnHome
 import com.example.myestate.utils.CoilImage
@@ -73,12 +74,13 @@ fun AdvertList(
                         .clickable {
                             navigateToDetail(advert.id)
                         }
-
                     ){
                         ImageInfo(
                             advert.images[0],
                             advert.onFavState,
-                           onFavIconClick = {viewModel.onClickFavIcon(advert.id)}
+                           onFavIconClick = {
+                               viewModel.onAction(HomeContract.UiAction.clickedFavIcon(advert.id))
+                           }
                         )
                         AdvertInfo(advert)
                     }

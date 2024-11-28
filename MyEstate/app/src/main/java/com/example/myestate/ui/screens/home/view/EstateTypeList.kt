@@ -17,21 +17,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.myestate.R
-import com.example.myestate.retrofit.ApiService
-import com.example.myestate.ui.components.BoxClickable
+
 import com.example.myestate.ui.components.TextComponents
 import com.example.myestate.ui.screens.home.HomeContract
-import com.example.myestate.ui.screens.home.HomeScreen
-import com.example.myestate.ui.screens.home.HomeService
 import com.example.myestate.ui.screens.home.HomeViewModel
-import com.example.myestate.ui.screens.home.models.EstateType
 import com.example.myestate.utils.getStringRes
-import okhttp3.internal.wait
 
 @Composable
 fun EstateTypeList(

@@ -35,7 +35,6 @@ class HomeService @Inject constructor(private val apiService: ApiService) : Home
             }
         } catch (t: Throwable) {
             estateTypeList = Pair(emptyList(),true)
-            Log.e("Service Error", "Error: ${t.message}")
         }
     }
 
@@ -51,11 +50,9 @@ class HomeService @Inject constructor(private val apiService: ApiService) : Home
                 categoryList = Pair(list,false)
             } else {
                 categoryList = Pair(emptyList(),true)
-                Log.e("Service Error", "Error fetching data: ${response.code()}")
             }
         } catch (t: Throwable) {
             categoryList = Pair(emptyList(),true)
-            Log.e("Service Error", "Error: ${t.message}")
         }
     }
 
@@ -71,11 +68,9 @@ class HomeService @Inject constructor(private val apiService: ApiService) : Home
                 advertOnHomeList = Pair(list,false)
             } else {
                 advertOnHomeList = Pair(emptyList(),true)
-                Log.e("Service Error", "Error fetching data: ${response.code()}")
             }
         } catch (t: Throwable) {
             advertOnHomeList = Pair(emptyList(),true)
-            Log.e("Service Error", "Error: ${t.message}")
         }
     }
 

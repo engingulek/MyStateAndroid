@@ -26,8 +26,6 @@ fun AppBar(
            leftIcon : Int? = null,
            rightIcon : Int? = null,
            navigateRightIconAction : () -> Unit? = {},
-
-
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -44,8 +42,6 @@ fun AppBar(
 
             )
         }
-
-
         TextComponents.HeadlineTitle(
             title,
             Color.Blue,
@@ -58,10 +54,8 @@ fun AppBar(
                     .clickable {
                         navigateRightIconAction()
                     }
-
             )
         }
-
     }
 }
 

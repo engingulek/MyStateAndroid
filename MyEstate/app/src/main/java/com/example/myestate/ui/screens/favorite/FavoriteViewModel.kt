@@ -1,6 +1,7 @@
 package com.example.myestate.ui.screens.favorite
 
 import android.util.Log
+import androidx.compose.ui.platform.isDebugInspectorInfoEnabled
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myestate.R
@@ -48,7 +49,14 @@ class FavoriteViewModel @Inject constructor(private val favoriteRoomService: Fav
         }
     }
 
-    fun onClickFavIcon(id:Int){
+    fun onAction(action:FavoriteContract.UiAction){
+        when(action){
+            is FavoriteContract.UiAction.clickedFavorite -> onClickFavIcon(action.id)
+        }
+    }
+
+
+    private  fun onClickFavIcon(id:Int){
         viewModelScope.launch {
             favoriteRoomService.deleteFav(id)
             tempList = tempList.filter { it.id != id }

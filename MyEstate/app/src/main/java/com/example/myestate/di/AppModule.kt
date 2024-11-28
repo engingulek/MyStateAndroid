@@ -1,7 +1,6 @@
 package com.example.myestate.di
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import com.example.myestate.retrofit.ApiService
 import com.example.myestate.room.FavoriteDao
@@ -14,7 +13,6 @@ import com.example.myestate.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -55,7 +53,6 @@ class AppModule {
             .fallbackToDestructiveMigration()
             .createFromAsset("database.sqlite")
             .build()
-
     }
 
     @Provides

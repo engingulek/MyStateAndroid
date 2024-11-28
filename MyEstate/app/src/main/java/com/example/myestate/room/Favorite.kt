@@ -14,5 +14,4 @@ data class Favorite(
     @ColumnInfo(name = "city") @NotNull    val city:String,
     @ColumnInfo(name = "district") @NotNull     val district:String,
     @ColumnInfo(name = "price") @NotNull     val price:Int,
-) {
-}
+)

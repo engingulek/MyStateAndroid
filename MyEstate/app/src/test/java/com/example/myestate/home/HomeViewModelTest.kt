@@ -7,6 +7,7 @@ import org.junit.Test
 import com.example.myestate.ui.screens.home.HomeServiceInterface
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.myestate.R
+import com.example.myestate.room.FavoriteRoomService
 import com.example.myestate.ui.screens.home.HomeContract
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,12 +33,13 @@ class HomeViewModelTest {
 
     private lateinit var viewModel: HomeViewModelInterface
     private lateinit var service: MockHomeService
+    private lateinit var roomService: FavoriteRoomService
 
     @Before
     fun setup(){
         Dispatchers.setMain(Dispatchers.Unconfined)
         service = MockHomeService()
-        viewModel = HomeViewModel(service)
+        viewModel = HomeViewModel(service,roomService)
 
     }
 

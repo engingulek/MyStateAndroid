@@ -13,19 +13,15 @@ import com.example.myestate.R
 fun ImageDrawableText(image:Int,title:String,type:String="left") {
     if(type == "left"){
         Row {
-
             Image(painterResource(image),
                 contentDescription = "location_pin")
             TextComponents.NormalText(title, Color.Gray)
-
         }
     }else{
         Row {
             TextComponents.NormalText(title, Color.Gray)
             Image(painterResource(image),
                 contentDescription = "location_pin")
-
-
         }
     }
 
