@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myestate.R
+import com.example.myestate.room.Favorite
+import com.example.myestate.room.FavoriteRoomService
 import com.example.myestate.ui.screens.home.models.AdvertOnHome
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,10 +19,15 @@ interface HomeViewModelInterface {
     val categoryUi : StateFlow<HomeContract.CategoryUiState>
     val advertOnHomeUi : StateFlow<HomeContract.AdvertOnHomeUiState>
     fun onAction(action:HomeContract.UiAction)
+    fun onClickFavIcon(id:Int)
+    fun reloadData()
 }
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val service: HomeServiceInterface) : ViewModel(),HomeViewModelInterface {
+class HomeViewModel @Inject constructor(
+    private val service: HomeServiceInterface,
+    private val favoriteRoomService: FavoriteRoomService
+) : ViewModel(),HomeViewModelInterface {
     private val _uiState = MutableStateFlow(HomeContract.UiState())
     override var state : StateFlow<HomeContract.UiState> = _uiState
 
@@ -45,6 +52,19 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
 
     private fun fetchData(){
         // estate type
+        fetchEstateType()
+
+        // category
+        fetchCategory()
+
+        // advert
+        fetchAdvert()
+
+
+    }
+
+    //// estate type
+    private fun fetchEstateType(){
         viewModelScope.launch {
             service.fetchAllEstateType()
             val data = service.getAllEstateType()
@@ -68,8 +88,10 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
                 )
             }
         }
+    }
 
-        // category
+    // category
+    private fun fetchCategory() {
         viewModelScope.launch {
             service.fetchAllCategory()
             val data = service.getAllCategory()
@@ -90,8 +112,10 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
                 )
             }
         }
+    }
 
-        // adverts
+    // adverts
+    private fun fetchAdvert() {
         viewModelScope.launch {
             service.fetchAllAdvertsOnHome()
             val data = service.getAllAdvertsOnHome()
@@ -106,13 +130,23 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
                 tempAdvertList = emptyList()
 
             }else{
-                tempAdvertList = data.first
+                tempAdvertList = data.first.map {  advertOnHome ->
+                    val control = favoriteRoomService.favControl(advertOnHome.id)
+                    advertOnHome.copy(
+                        onFavState = control > 0
+                    )
+                }
                 _advertOnHomeUi.value = _advertOnHomeUi.value.copy(
-                    list = data.first,
+                    list = tempAdvertList,
                     message = Pair(R.string.empty,false)
                 )
+
             }
         }
+    }
+
+    override fun reloadData() {
+        fetchAdvert()
     }
 
     override fun onAction(action:HomeContract.UiAction) {
@@ -174,5 +208,25 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
                 message = Pair(R.string.empty,false)
             )
         }
+    }
+
+    override fun onClickFavIcon(id: Int) {
+        val advert = _advertOnHomeUi.value.list.first { it.id == id }
+        val favorite = Favorite(
+            advert.id,
+            advert.images[0],
+            advert.title,
+            advert.city,
+            advert.district,
+            advert.price.toInt())
+        viewModelScope.launch {
+            val control = favoriteRoomService.favControl(id)
+            if (control > 0){
+                favoriteRoomService.deleteFav(id )
+            }else{
+                favoriteRoomService.addFav(favorite)
+            }
+        }
+        fetchAdvert()
     }
 }

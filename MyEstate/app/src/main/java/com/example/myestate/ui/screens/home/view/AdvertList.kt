@@ -1,4 +1,5 @@
 package com.example.myestate.ui.screens.home.view
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -74,7 +75,11 @@ fun AdvertList(
                         }
 
                     ){
-                        ImageInfo(advert.images[0])
+                        ImageInfo(
+                            advert.images[0],
+                            advert.onFavState,
+                           onFavIconClick = {viewModel.onClickFavIcon(advert.id)}
+                        )
                         AdvertInfo(advert)
                     }
                 }
@@ -85,7 +90,12 @@ fun AdvertList(
 }
 
 @Composable
-private fun ImageInfo(url:String){
+private fun ImageInfo(
+    url:String,
+    onFav:Boolean,
+    onFavIconClick: () -> Unit
+){
+    Log.e("type","$onFav")
     Box( modifier = Modifier
         .fillMaxWidth()
         .height(180.dp)
@@ -101,11 +111,15 @@ private fun ImageInfo(url:String){
 
         )
         Image(painterResource(
-            R.drawable.no_fav_icon),
+            if (onFav) R.drawable.fav_icon else R.drawable.no_fav_icon
+        ),
             contentDescription = "fav icon",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.padding(10.dp)
                 .size(30.dp)
+                .clickable {
+                    onFavIconClick()
+                }
         )
     }
 }

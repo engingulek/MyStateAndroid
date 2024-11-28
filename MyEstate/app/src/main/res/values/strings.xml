@@ -18,4 +18,5 @@
     <string name="Floors">Floors</string>
     <string name="errorMessage">Something went wrong</string>
     <string name="noData">No Data</string>
+    <string name="favorites">Favorites</string>
 </resources>

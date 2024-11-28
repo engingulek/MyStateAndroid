@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -16,21 +17,28 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myestate.ui.components.TextComponents
 import com.example.myestate.ui.screens.home.HomeContract
 import com.example.myestate.ui.screens.home.HomeViewModel
 import com.example.myestate.utils.getStringRes
 
 @Composable
-fun CategoriesList(viewModel: HomeViewModel){
+fun CategoriesList(viewModel: HomeViewModel = hiltViewModel()){
     val categoryUiState by viewModel.categoryUi.collectAsState()
-    Column(verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+        ) {
+
         TextComponents.SubTitle(
             getStringRes(categoryUiState.title),
             color = Color.Black,
             modifier = Modifier.padding(horizontal = 10.dp))
+
         if (categoryUiState.error.second){
             Column {
                 TextComponents.NormalText(getStringRes(categoryUiState.error.first), Color.Red)
@@ -70,8 +78,8 @@ fun CategoriesList(viewModel: HomeViewModel){
 
 
 
-/*@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun CategoriesPreview() {
-    CategoriesList(state = HomeContract.UiState())
-}*/
+    CategoriesList()
+}

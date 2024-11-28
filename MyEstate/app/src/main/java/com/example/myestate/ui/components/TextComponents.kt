@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 
 object TextComponents {
 
@@ -15,12 +16,15 @@ object TextComponents {
     fun HeadlineTitle(
         title:String,
         color:Color = Color.White,
+        modifier: Modifier = Modifier
         ){
         Text(
             title,
             color = color ,
             style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.SemiBold
+            fontWeight = FontWeight.SemiBold,
+            modifier = modifier,
+                    textAlign = TextAlign.Center
         )
     }
 
