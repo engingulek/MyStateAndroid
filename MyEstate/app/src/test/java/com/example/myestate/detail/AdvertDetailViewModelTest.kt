@@ -1,6 +1,7 @@
 package com.example.myestate.detail
 
 import com.example.myestate.R
+import com.example.myestate.ui.screens.detail.AdvertDetailService
 import com.example.myestate.ui.screens.detail.AdvertDetailViewModel
 import com.example.myestate.ui.screens.detail.AdvertDetailViewModelInterface
 import com.example.myestate.utils.getStringRes
@@ -10,10 +11,11 @@ import org.junit.Test
 
 class AdvertDetailViewModelTest {
     private lateinit var viewModel: AdvertDetailViewModelInterface
+    private lateinit var service : AdvertDetailService
 
     @Before
     fun setup() {
-        viewModel = AdvertDetailViewModel()
+        viewModel = AdvertDetailViewModel(service)
     }
 
     @Test
