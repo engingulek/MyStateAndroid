@@ -12,13 +12,20 @@ interface FavoriteDao {
     @Query("SELECT * FROM favorite")
     suspend fun allFavorite() : List<Favorite>
 
-  /*  @Insert
+   @Insert
     suspend fun addAdvertToFav(fav:Favorite)
 
-    @Delete
-    suspend fun deleteFac(fav:Favorite)
-
-
     @Query("SELECT count(*) FROM favorite WHERE id=:id")
-    suspend fun favControl(id:Int) : Int*/
+    suspend fun favControl(id:Int) : Int
+
+
+    @Query("DELETE FROM favorite WHERE id = :id")
+    suspend fun deleteFav(id: Int)
+
+    /*  @Delete
+     suspend fun deleteFac(fav:Favorite)
+
+
+     @Query("SELECT count(*) FROM favorite WHERE id=:id")
+     suspend fun favControl(id:Int) : Int*/
 }

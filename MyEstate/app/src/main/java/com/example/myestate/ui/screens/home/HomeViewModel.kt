@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myestate.R
+import com.example.myestate.room.Favorite
+import com.example.myestate.room.FavoriteRoomService
 import com.example.myestate.ui.screens.home.models.AdvertOnHome
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,10 +19,14 @@ interface HomeViewModelInterface {
     val categoryUi : StateFlow<HomeContract.CategoryUiState>
     val advertOnHomeUi : StateFlow<HomeContract.AdvertOnHomeUiState>
     fun onAction(action:HomeContract.UiAction)
+    fun onClickFavIcon(id:Int)
 }
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val service: HomeServiceInterface) : ViewModel(),HomeViewModelInterface {
+class HomeViewModel @Inject constructor(
+    private val service: HomeServiceInterface,
+    private val favoriteRoomService: FavoriteRoomService
+) : ViewModel(),HomeViewModelInterface {
     private val _uiState = MutableStateFlow(HomeContract.UiState())
     override var state : StateFlow<HomeContract.UiState> = _uiState
 
@@ -173,6 +179,25 @@ class HomeViewModel @Inject constructor(private val service: HomeServiceInterfac
                 list = filterList,
                 message = Pair(R.string.empty,false)
             )
+        }
+    }
+
+    override fun onClickFavIcon(id: Int) {
+        val advert = _advertOnHomeUi.value.list.first { it.id == id }
+        val favorite = Favorite(
+            advert.id,
+            advert.images[0],
+            advert.title,
+            advert.city,
+            advert.district,
+            advert.price.toInt())
+        viewModelScope.launch {
+            val control = favoriteRoomService.favControl(id)
+            if (control > 0){
+                favoriteRoomService.deleteFav(id)
+            }else{
+                favoriteRoomService.addFav(favorite)
+            }
         }
     }
 }

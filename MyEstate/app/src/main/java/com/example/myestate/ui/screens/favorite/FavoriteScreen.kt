@@ -36,7 +36,9 @@ import com.example.myestate.room.Favorite
 import com.example.myestate.ui.components.AppBar
 import com.example.myestate.ui.components.TextComponents
 import com.example.myestate.ui.screens.home.HomeScreen
+import com.example.myestate.utils.CoilImage
 import com.example.myestate.utils.getStringRes
+import com.example.myestate.utils.toFormatPrice
 
 @Composable
 fun FavoriteScreen(
@@ -79,7 +81,7 @@ fun FavAdvertItem(fav:Favorite) {
             .padding(vertical = 10.dp, horizontal = 10.dp)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.testadvertimage),
+            painter = CoilImage.loadImageCoil(fav.imageUrl),
             contentDescription = "Image",
             contentScale = ContentScale.FillBounds,
             modifier = Modifier
@@ -95,7 +97,7 @@ fun FavAdvertItem(fav:Favorite) {
         ) {
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "Title",
+                    text = fav.title,
                     style = MaterialTheme.typography.titleMedium,
                     color = Color.Black
                 )
@@ -104,12 +106,12 @@ fun FavAdvertItem(fav:Favorite) {
 
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "City,District",
+                    text = "${fav.city},${fav.district}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Gray
                 )
                 TextComponents.NormalText(
-                    "Price",
+                    fav.price.toLong().toFormatPrice(),
                     color = Color.Blue
                 )
             }

@@ -1,5 +1,6 @@
 package com.example.myestate.ui.screens.home.models
 
+import com.example.myestate.R
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -13,5 +14,6 @@ data class AdvertOnHome (
    @SerializedName("advertDate") val advertDate: String,
    @SerializedName("estateType") val estateType: String,
    @SerializedName("price") val price: Long,
-   @SerializedName("category") val category: String
+   @SerializedName("category") val category: String,
+   val onFavState : Boolean = false
 ) : Serializable
